@@ -1,6 +1,4 @@
-/*! tailwindcss v4.0.0 | MIT License | https://tailwindcss.com */
-@tailwind base;
-@tailwind components;
+/*! tailwindcss v4.0.14 | MIT License | https://tailwindcss.com */
 .fixed {
   position: fixed;
 }
@@ -22,9 +20,6 @@
 .contents {
   display: contents;
 }
-.flex {
-  display: flex;
-}
 .grid {
   display: grid;
 }
@@ -33,9 +28,6 @@
 }
 .inline {
   display: inline;
-}
-.inline-flex {
-  display: inline-flex;
 }
 .table {
   display: table;
@@ -150,6 +142,10 @@
   inherits: false;
 }
 @property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
   syntax: "*";
   inherits: false;
 }
