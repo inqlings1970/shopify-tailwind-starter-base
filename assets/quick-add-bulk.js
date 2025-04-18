@@ -21,8 +21,6 @@ if (!customElements.get('quick-add-bulk')) {
         this.listenForActiveInput();
         this.listenForKeydown();
         this.lastActiveInputId = null;
-        const pageParams = new URLSearchParams(window.location.search);
-        window.pageNumber = decodeURIComponent(pageParams.get('page') || '');
       }
 
       connectedCallback() {
@@ -55,7 +53,7 @@ if (!customElements.get('quick-add-bulk')) {
         }
       }
 
-      getInput() {
+      get input() {
         return this.querySelector('quantity-input input');
       }
 
@@ -65,7 +63,7 @@ if (!customElements.get('quick-add-bulk')) {
 
       listenForActiveInput() {
         if (!this.classList.contains('hidden')) {
-          this.getInput().addEventListener('focusin', (event) =>
+          this.input?.addEventListener('focusin', (event) =>
             event.target.select(),
           );
         }
@@ -73,9 +71,9 @@ if (!customElements.get('quick-add-bulk')) {
       }
 
       listenForKeydown() {
-        this.getInput().addEventListener('keydown', (event) => {
+        this.input?.addEventListener('keydown', (event) => {
           if (event.key === 'Enter') {
-            this.getInput().blur();
+            this.input?.blur();
             this.isEnterPressed = true;
           }
         });
@@ -89,6 +87,16 @@ if (!customElements.get('quick-add-bulk')) {
           },
           { once: true },
         );
+      }
+
+      get sectionId() {
+        if (!this._sectionId) {
+          this._sectionId = this.closest(
+            '.collection-quick-add-bulk',
+          ).dataset.id;
+        }
+
+        return this._sectionId;
       }
 
       onCartUpdate() {
@@ -119,6 +127,15 @@ if (!customElements.get('quick-add-bulk')) {
               reject(e);
             });
         });
+      }
+
+      getSectionsUrl() {
+        const pageParams = new URLSearchParams(window.location.search);
+        const pageNumber = decodeURIComponent(pageParams.get('page') || '');
+
+        return `${window.location.pathname}${
+          pageNumber ? `?page=${pageNumber}` : ''
+        }`;
       }
 
       updateMultipleQty(items) {
@@ -156,7 +173,7 @@ if (!customElements.get('quick-add-bulk')) {
           })
           .finally(() => {
             this.selectProgressBar().classList.add('hidden');
-            this.requestStarted = false;
+            this.setRequestStarted(false);
           });
       }
 
@@ -178,7 +195,7 @@ if (!customElements.get('quick-add-bulk')) {
           },
           {
             id: 'CartDrawer',
-            selector: '#CartDrawer',
+            selector: '.drawer__inner',
             section: 'cart-drawer',
           },
         ];

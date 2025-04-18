@@ -28,7 +28,7 @@ quantity-popover volume-pricing li {
 .quick-order-list-total__confirmation
   quick-order-list-remove-all-button
   .button,
-quantity-popover quick-order-list-remove-button .button {
+quantity-popover .quick-order-list-remove-button .button {
   --shadow-opacity: 0;
   --border-opacity: 0;
 }
